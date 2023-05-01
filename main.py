@@ -108,10 +108,11 @@ async def login_two(username: str = Form(), password: str = Form()):
     #
     # return logged in
     pw = data.get(username, False)
-    if pw and pw == password:
+    if pw:
         # Mimic an expensive password comparison
         time.sleep(random.randint(15, 40) / 100)
-        return JSONResponse(content={"message": "Success"}, status_code=200)
+        if pw == password:
+            return JSONResponse(content={"message": "Success"}, status_code=200)
 
     return JSONResponse(content={"message": "Invalid authentication"}, status_code=200)
 
