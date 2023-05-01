@@ -1,0 +1,7 @@
+*
+!templates
+!main.py
+!requirements.txt
+!entrypoint.sh
+!log_conf.yaml
+!creds.json
