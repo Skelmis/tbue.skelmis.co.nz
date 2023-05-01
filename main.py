@@ -114,3 +114,33 @@ async def login_two(username: str = Form(), password: str = Form()):
         return JSONResponse(content={"message": "Success"}, status_code=200)
 
     return JSONResponse(content={"message": "Invalid authentication"}, status_code=200)
+
+
+@app.post(
+    "/login/3",
+    responses={
+        200: {"model": Message},
+    },
+    description="A login form with no information leakage.<br>"
+    "TBUE is mitigated by constant response times regardless of auth state.",
+)
+async def login_three(username: str = Form(), password: str = Form()):
+    # Example real world flows are more like
+    # if user doesnt exist:
+    #     return failed
+    #
+    # # Expensive check here only applies
+    # # to valid users for the site
+    # if password is not correct:
+    #    return failed
+    #
+    # return logged in
+    pw = data.get(username, False)
+
+    # All requests get roughly the same
+    # response times, enough to mitigate TBUE
+    time.sleep(random.randint(15, 40) / 100)
+    if pw and pw == password:
+        return JSONResponse(content={"message": "Success"}, status_code=200)
+
+    return JSONResponse(content={"message": "Invalid authentication"}, status_code=200)
