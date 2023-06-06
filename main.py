@@ -102,6 +102,7 @@ async def login_one(username: str = Form(), password: str = Form()):
     "/login/2",
     responses={
         200: {"model": Message},
+        400: {"model": Message},
     },
     description="A login form with no (visible) information leakage.",
 )
@@ -123,13 +124,14 @@ async def login_two(username: str = Form(), password: str = Form()):
         if pw == password:
             return JSONResponse(content={"message": "Success"}, status_code=200)
 
-    return JSONResponse(content={"message": "Invalid authentication"}, status_code=200)
+    return JSONResponse(content={"message": "Invalid authentication"}, status_code=400)
 
 
 @app.post(
     "/login/3",
     responses={
         200: {"model": Message},
+        400: {"model": Message},
     },
     description="A login form with no information leakage.<br>"
     "TBUE is mitigated by constant response times regardless of auth state.",
@@ -153,4 +155,4 @@ async def login_three(username: str = Form(), password: str = Form()):
     if pw and pw == password:
         return JSONResponse(content={"message": "Success"}, status_code=200)
 
-    return JSONResponse(content={"message": "Invalid authentication"}, status_code=200)
+    return JSONResponse(content={"message": "Invalid authentication"}, status_code=400)
