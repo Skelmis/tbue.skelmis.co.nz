@@ -56,6 +56,15 @@ class Failure(Message):
 
 
 @app.middleware("http")
+async def timer_injection(request: Request, call_next):
+    start = time.time()
+    response: Response = await call_next(request)
+    finish = time.time()
+    response.headers["X-TIME-SECONDS"] = str(finish - start)
+    return response
+
+
+@app.middleware("http")
 async def header_injection(request: Request, call_next):
     response: Response = await call_next(request)
     response.headers["X-POWERED-BY"] = random.choice(powered_by)
