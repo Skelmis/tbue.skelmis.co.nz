@@ -1,3 +1,4 @@
+import asyncio
 import json
 import random
 import time
@@ -120,7 +121,7 @@ async def login_two(username: str = Form(), password: str = Form()):
     pw = data.get(username, False)
     if pw:
         # Mimic an expensive password comparison
-        time.sleep(random.randint(5, 15) / 100)
+        await asyncio.sleep(random.randint(5, 15) / 100)
         if pw == password:
             return JSONResponse(content={"message": "Success"}, status_code=200)
 
@@ -151,7 +152,7 @@ async def login_three(username: str = Form(), password: str = Form()):
 
     # All requests get roughly the same
     # response times, enough to mitigate TBUE
-    time.sleep(random.randint(5, 15) / 100)
+    await asyncio.sleep(random.randint(5, 15) / 100)
     if pw and pw == password:
         return JSONResponse(content={"message": "Success"}, status_code=200)
 
