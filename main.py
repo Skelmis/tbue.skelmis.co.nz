@@ -118,11 +118,11 @@ async def login_two(username: str = Form(), password: str = Form()):
     #    return failed
     #
     # return logged in
-    await asyncio.sleep(random.randint(1, 5) / 100)
+    await asyncio.sleep(random.randint(2, 6) / 100)
     pw = data.get(username, False)
     if pw:
         # Mimic an expensive password comparison
-        await asyncio.sleep(random.randint(6, 9) / 100)
+        await asyncio.sleep(random.randint(5, 8) / 100)
         if pw == password:
             return JSONResponse(content={"message": "Success"}, status_code=200)
 
